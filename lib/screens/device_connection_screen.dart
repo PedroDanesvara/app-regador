@@ -69,6 +69,7 @@ class _DeviceConnectionScreenState extends State<DeviceConnectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -138,11 +139,20 @@ class _DeviceConnectionScreenState extends State<DeviceConnectionScreen> {
                       // Campo de ID do dispositivo
                       TextFormField(
                         controller: _deviceIdController,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                         decoration: const InputDecoration(
                           labelText: 'ID do Dispositivo',
                           hintText: 'Ex: ESP32_001',
-                          prefixIcon: Icon(Icons.device_hub),
+                          hintStyle: TextStyle(color: Colors.grey),
+                          labelStyle: TextStyle(color: Colors.black87),
+                          prefixIcon: Icon(Icons.device_hub, color: Colors.black87),
                           border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: AppTheme.primaryColor, width: 2),
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {

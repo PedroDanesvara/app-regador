@@ -4,7 +4,7 @@ import 'package:projeto_alex_flutter/models/device.dart';
 import 'package:projeto_alex_flutter/models/sensor_data.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:3000/api';
+  static const String baseUrl = 'https://api-regador.vercel.app/api';
   // Para teste em dispositivo físico, use o IP da sua máquina
   // static const String baseUrl = 'http://192.168.1.100:3000/api';
 
