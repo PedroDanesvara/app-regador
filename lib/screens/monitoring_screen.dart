@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:projeto_alex_flutter/providers/device_provider.dart';
-import 'package:projeto_alex_flutter/screens/device_connection_screen.dart';
-import 'package:projeto_alex_flutter/utils/app_theme.dart';
-import 'package:projeto_alex_flutter/widgets/humidity_card.dart';
-import 'package:projeto_alex_flutter/widgets/temperature_card.dart';
-import 'package:projeto_alex_flutter/widgets/pump_control_card.dart';
-import 'package:projeto_alex_flutter/widgets/stats_card.dart';
+import '../providers/device_provider.dart';
+import '../utils/app_theme.dart';
+import '../widgets/humidity_card.dart';
+import '../widgets/pump_control_card.dart';
+import '../widgets/stats_card.dart';
+import 'device_connection_screen.dart';
 
 class MonitoringScreen extends StatefulWidget {
   const MonitoringScreen({super.key});
@@ -157,14 +156,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                       // Card de umidade
                       HumidityCard(
                         humidity: deviceProvider.deviceData?.umidadeSolo,
-                        lastUpdate: deviceProvider.deviceData?.timestamp,
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Card de temperatura
-                      TemperatureCard(
-                        temperature: deviceProvider.deviceData?.temperatura,
                         lastUpdate: deviceProvider.deviceData?.timestamp,
                       ),
 

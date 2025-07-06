@@ -73,20 +73,6 @@ class StatsCard extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // Estatísticas de temperatura
-            _buildSection(
-              title: 'Temperatura',
-              icon: Icons.thermostat,
-              color: AppTheme.tempGood,
-              stats: [
-                _buildStatItem('Média', '${stats.avgTemperature.toStringAsFixed(1)}°C'),
-                _buildStatItem('Mínima', '${stats.minTemperature.toStringAsFixed(1)}°C'),
-                _buildStatItem('Máxima', '${stats.maxTemperature.toStringAsFixed(1)}°C'),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
             // Informações de período
             const Divider(),
             const SizedBox(height: 12),

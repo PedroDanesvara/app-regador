@@ -2,7 +2,6 @@ class SensorData {
   final int id;
   final String deviceId;
   final double? umidadeSolo;
-  final double? temperatura;
   final DateTime timestamp;
   final String? status;
 
@@ -10,7 +9,6 @@ class SensorData {
     required this.id,
     required this.deviceId,
     this.umidadeSolo,
-    this.temperatura,
     required this.timestamp,
     this.status,
   });
@@ -45,7 +43,6 @@ class SensorData {
       id: parseInt(json['id']) ?? 0,
       deviceId: json['device_id'],
       umidadeSolo: parseDouble(json['umidade_solo']),
-      temperatura: parseDouble(json['temperatura']),
       timestamp: parseTimestamp(json['created_at'] ?? json['timestamp']),
       status: json['status'],
     );
@@ -56,7 +53,6 @@ class SensorData {
       'id': id,
       'device_id': deviceId,
       'umidade_solo': umidadeSolo,
-      'temperatura': temperatura,
       'timestamp': timestamp.toIso8601String(),
       'status': status,
     };
@@ -67,11 +63,8 @@ class DeviceStats {
   final String deviceId;
   final int totalReadings;
   final double avgHumidity;
-  final double avgTemperature;
   final double minHumidity;
   final double maxHumidity;
-  final double minTemperature;
-  final double maxTemperature;
   final DateTime lastReading;
   final DateTime firstReading;
 
@@ -79,11 +72,8 @@ class DeviceStats {
     required this.deviceId,
     required this.totalReadings,
     required this.avgHumidity,
-    required this.avgTemperature,
     required this.minHumidity,
     required this.maxHumidity,
-    required this.minTemperature,
-    required this.maxTemperature,
     required this.lastReading,
     required this.firstReading,
   });
@@ -107,11 +97,8 @@ class DeviceStats {
       deviceId: json['device_id'],
       totalReadings: json['total_readings'] ?? 0,
       avgHumidity: json['avg_umidade']?.toDouble() ?? 0.0,
-      avgTemperature: json['avg_temperatura']?.toDouble() ?? 0.0,
       minHumidity: json['min_umidade']?.toDouble() ?? 0.0,
       maxHumidity: json['max_umidade']?.toDouble() ?? 0.0,
-      minTemperature: json['min_temperatura']?.toDouble() ?? 0.0,
-      maxTemperature: json['max_temperatura']?.toDouble() ?? 0.0,
       lastReading: parseTimestamp(json['last_reading']),
       firstReading: parseTimestamp(json['first_reading']),
     );
