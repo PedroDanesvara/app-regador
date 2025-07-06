@@ -16,9 +16,22 @@ class SensorData {
   });
 
   factory SensorData.fromJson(Map<String, dynamic> json) {
+    double? parseDouble(dynamic value) {
+      if (value == null) return null;
+      if (value is double) return value;
+      if (value is int) return value.toDouble();
+      if (value is String) return double.tryParse(value);
+      return null;
+    }
+    int? parseInt(dynamic value) {
+      if (value == null) return null;
+      if (value is int) return value;
+      if (value is double) return value.toInt();
+      if (value is String) return int.tryParse(value);
+      return null;
+    }
     DateTime parseTimestamp(dynamic timestamp) {
       if (timestamp == null) return DateTime.now();
-      
       if (timestamp is int) {
         // Se é um timestamp em milissegundos
         return DateTime.fromMillisecondsSinceEpoch(timestamp);
@@ -26,15 +39,13 @@ class SensorData {
         // Se é uma string de data
         return DateTime.parse(timestamp);
       }
-      
       return DateTime.now();
     }
-
     return SensorData(
-      id: json['id'],
+      id: parseInt(json['id']) ?? 0,
       deviceId: json['device_id'],
-      umidadeSolo: json['umidade_solo']?.toDouble(),
-      temperatura: json['temperatura']?.toDouble(),
+      umidadeSolo: parseDouble(json['umidade_solo']),
+      temperatura: parseDouble(json['temperatura']),
       timestamp: parseTimestamp(json['created_at'] ?? json['timestamp']),
       status: json['status'],
     );
@@ -123,27 +134,29 @@ class PumpStatus {
   });
 
   factory PumpStatus.fromJson(Map<String, dynamic> json) {
-    DateTime? parseTimestamp(dynamic timestamp) {
-      if (timestamp == null) return null;
-      
-      if (timestamp is int) {
-        // Se é um timestamp em milissegundos
-        return DateTime.fromMillisecondsSinceEpoch(timestamp);
-      } else if (timestamp is String) {
-        // Se é uma string de data
-        return DateTime.parse(timestamp);
-      }
-      
+    int? parseInt(dynamic value) {
+      if (value == null) return null;
+      if (value is int) return value;
+      if (value is double) return value.toInt();
+      if (value is String) return int.tryParse(value);
       return null;
     }
-
+    DateTime? parseTimestamp(dynamic timestamp) {
+      if (timestamp == null) return null;
+      if (timestamp is int) {
+        return DateTime.fromMillisecondsSinceEpoch(timestamp);
+      } else if (timestamp is String) {
+        return DateTime.parse(timestamp);
+      }
+      return null;
+    }
     return PumpStatus(
       isActive: json['is_active'] ?? false,
       lastActivated: parseTimestamp(json['last_activated']),
       lastDeactivated: parseTimestamp(json['last_deactivated']),
-      totalActivations: json['total_activations'] ?? 0,
-      currentSession: json['duration_seconds'] != null 
-          ? Duration(seconds: json['duration_seconds'])
+      totalActivations: parseInt(json['total_activations']) ?? 0,
+      currentSession: parseInt(json['duration_seconds']) != null
+          ? Duration(seconds: parseInt(json['duration_seconds'])!)
           : null,
     );
   }
