@@ -207,6 +207,17 @@ class DeviceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void logout() {
+    _stopAutoUpdate();
+    _currentDevice = null;
+    _deviceData = null;
+    _deviceStats = null;
+    _pumpStatus = PumpStatus();
+    _isConnected = false;
+    _clearError();
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _updateTimer?.cancel();

@@ -37,71 +37,69 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
               slivers: [
                 // App Bar customizada
                 SliverAppBar(
-                  expandedHeight: 120,
+                  expandedHeight: 140,
                   floating: false,
                   pinned: true,
                   backgroundColor: AppTheme.primaryColor,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
-                      deviceProvider.currentDevice!.name ?? 
-                      deviceProvider.currentDevice!.deviceId,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    background: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            AppTheme.primaryColor,
-                            AppTheme.primaryDarkColor,
-                          ],
-                        ),
-                      ),
+                    centerTitle: true,
+                    collapseMode: CollapseMode.parallax,
+                    titlePadding: const EdgeInsets.only(bottom: 8),
+                    title: FittedBox(
+                      fit: BoxFit.scaleDown,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        deviceProvider.currentDevice!.location ?? 
-                                        'Localização não definida',
-                                        style: const TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Última atualização: ${_formatLastUpdate()}',
-                                        style: const TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: _showDisconnectDialog,
-                                  icon: const Icon(
-                                    Icons.wifi_off,
-                                    color: Colors.white,
-                                  ),
-                                  tooltip: 'Desconectar',
+                          Text(
+                            deviceProvider.currentDevice!.name ?? deviceProvider.currentDevice!.deviceId,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black54,
+                                  offset: Offset(0, 2),
+                                  blurRadius: 4,
                                 ),
                               ],
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          if (deviceProvider.currentDevice?.location != null)
+                            Text(
+                              deviceProvider.currentDevice!.location!,
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black45,
+                                    offset: Offset(0, 1),
+                                    blurRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          Text(
+                            'Última atualização: ${_formatLastUpdate()}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black45,
+                                  offset: Offset(0, 1),
+                                  blurRadius: 2,
+                                ),
+                              ],
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -112,6 +110,17 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                       onPressed: () => deviceProvider.updateDeviceData(),
                       icon: const Icon(Icons.refresh, color: Colors.white),
                       tooltip: 'Atualizar',
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        deviceProvider.logout();
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => const DeviceConnectionScreen()),
+                          (route) => false,
+                        );
+                      },
+                      icon: const Icon(Icons.logout, color: Colors.white),
+                      tooltip: 'Sair',
                     ),
                   ],
                 ),
